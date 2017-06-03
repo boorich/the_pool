@@ -1,0 +1,35 @@
+Locations:
+
+* Das Schwimmbad
+ * Handtücher
+ * Getrudes Baum
+ * Sprungturm
+ * Beckenrand
+ * Burgerladen
+ * Pool
+* der Abwasserkanal
+ * Wegkreuzung
+* die Steilküste
+ * Kante
+ * Holzbalken
+* die Zisterne
+* der Schatzraum
+* der geheime Krater
+ * Höhlenausgang
+ * am vereisten See
+ * am Bergtroll
+* der dunkle Pfad
+ * bei den Fledermäusen
+ * bei den Krähen
+* der Park
+ * Klettergrüst
+ * Wippe
+ * Geralds Baum
+* der Feenhort
+ * am Brunnen
+ * am Schatz
+* der Reitstall
+ * Putzplatz
+ * Sattelkammer
+ * Futterecke
+* der Reitplatz
