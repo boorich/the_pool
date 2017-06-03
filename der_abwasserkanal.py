@@ -1,5 +1,9 @@
 #der Abwasserkanal
 
+locations = {
+'Abwasserkanal' : Abwasserkanal(),
+}
+
 class Abwasserkanal(Location):
     global loc_index = 7
     def enter(self):

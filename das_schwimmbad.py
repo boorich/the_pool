@@ -1,8 +1,17 @@
 #das schwimmbad
 
+locations = {
+'Liegewiese' : Liegewiese(),
+'Gertrude\'s Baum' : GertrudesBaum(),
+'Beckenrand' : Beckenrand(),
+'Sprungturm' : Sprungturm(),
+'Schwimmbecken' : Schwimmbecken(),
+'Imbiss' : Imbiss(),
+'Kassenhaus' : Kassenhaus(),
+}
+
 class Liegewiese(Location):
     loc_index = 0
-    loc_name = 'Liegewiese'
     def enter(self):
         if first_visit:
             print "Du bist an Gertrudes Baum."

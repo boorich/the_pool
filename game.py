@@ -37,13 +37,11 @@ class Engine(object):
 
 class Location(object):
     """Spawn locations and a list its scenes."""
+
     locations = {
-    'central_corridor' : CentralCorridor(),
-    'laser_weapon_armory' : LaserWeaponArmory(),
-    'the_bridge' : TheBridge(),
-    'escape_pod' : EscapePod(),
-    'death' : Death(),
-    'finished' : Finished(),
+    'start' : Start(),
+    'knockout' : Knockout(),
+    'ende' : Ende(),
     }
 
     def __init__(self, start_scene):
