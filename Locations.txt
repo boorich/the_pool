@@ -1,7 +1,7 @@
 Locations:
 
 * Das Schwimmbad
- * Handtücher
+ * Liegewiese
  * Getrudes Baum
  * Sprungturm
  * Beckenrand
@@ -9,20 +9,20 @@ Locations:
  * Pool
 * der Abwasserkanal
  * Wegkreuzung
-* die Steilküste
+* die Steilkueste
  * Kante
  * Holzbalken
 * die Zisterne
 * der Schatzraum
 * der geheime Krater
- * Höhlenausgang
+ * Hoehlenausgang
  * am vereisten See
  * am Bergtroll
 * der dunkle Pfad
- * bei den Fledermäusen
- * bei den Krähen
+ * bei den Fledermaeusen
+ * bei den Kraehen
 * der Park
- * Klettergrüst
+ * Klettergruest
  * Wippe
  * Geralds Baum
 * der Feenhort

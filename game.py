@@ -2,7 +2,7 @@ import das_schwimmbad
 import der_abwasserkanal
 
 class Navigation(object):
-    """Handle all possible locations, track current location, find next possible location."""
+    """Take in Map and handle all possible locations, track current location, find next possible location."""
     def __init__(self, gamemap, scenemap):
         self.gamemap = gamemap
         self.scenemap = scenemap
@@ -20,10 +20,10 @@ class Engine(object):
     def __init__(self, arg):
         self.arg = arg
 
-    def loadgame(self):
+    def playgame(self):
         pass
 
-    def playgame(self):
+    def loadgame(self):
         pass
 
     def savegame(self):
@@ -35,13 +35,18 @@ class Engine(object):
     def delete_player(self):
         pass
 
-class Location(object):
-    """Spawn locations and a list its scenes."""
 
-    locations = {
+
+
+class Map(object):
+    """Spawn scenes and a list its locations."""
+
+    scenes = {
     'start' : Start(),
     'knockout' : Knockout(),
     'ende' : Ende(),
+    'schwimmbad' : Schwimmbad(),
+    'abwasserkanal' : Abwasserkanal(),
     }
 
     def __init__(self, start_scene):
@@ -49,6 +54,8 @@ class Location(object):
 
     def create_doors(self):
         pass
+
+
 
 class Item(object):
     """Handle objects that can be obtained and used by the player."""
@@ -61,12 +68,12 @@ class Item(object):
 class Door(object):
     """Handle opening and closing of doors.
     * Offener Durchgang
-    * Drehtür
+    * Drehtuer
     * Gitter
-    * Normale Tür
+    * Normale Tuer
     * Getarnter Durchgang
-    * Schiebetür
-    * Schwingtür
+    * Schiebetuer
+    * Schwingtuer
     """
     def __init__(self, name, key):
         self.name = name
@@ -109,14 +116,14 @@ class Agent(object):
     * Alia
     * Gertrude, die Elster
     * dicker Junge
-    * kleines Mädchen
+    * kleines Maedchen
     * James
     * Gerald, der Rabe
     * Samira, die Fee
     * Lisa
     * Bergtroll
-    * Fledermäuse
-    * Krähen
+    * Fledermaeuse
+    * Kraehen
     """
     def __init__(self, name, hitpoints, strenght):
         self.name = name
