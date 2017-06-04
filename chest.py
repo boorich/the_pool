@@ -1,4 +1,4 @@
-class Truhe(object):
+class Chest(object):
     """Take in items and handle opening and closing of chests and loot.
     * Treasure Chest
     * Storage Chest

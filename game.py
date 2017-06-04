@@ -1,11 +1,31 @@
-import das_schwimmbad
-import der_abwasserkanal
+from sys import exit
+
+import agent
+import mount
+import trap
+import chest
+import item
+import game_map
+
+
+class Menu(object):
+    def main_menu(self):
+        print """
+        Neues Spiel   (0)
+        Spiel laden   (1)
+        Spiel beenden (2)
+        """
+        action = raw_input("Bitte waehle eine Option: ")
+        return action
+
+    def context_menu(self):
+        action = raw_input("Bitte waehle eine Option: ")
+        return action
 
 class Navigation(object):
     """Take in Map and handle all possible locations, track current location, find next possible location."""
-    def __init__(self, gamemap, scenemap):
+    def __init__(self, gamemap):
         self.gamemap = gamemap
-        self.scenemap = scenemap
 
     def next_scene(self):
         """return a list of possible next scenes"""
@@ -17,11 +37,12 @@ class Navigation(object):
 
 class Engine(object):
     """Takes in the navigation, plays the game, handles savegames and players."""
-    def __init__(self, arg):
-        self.arg = arg
+    def __init__(self, navigation):
+        self.navigation = navigation
 
     def playgame(self):
-        pass
+        """Show Textblock followed by Menu of available options."""
+        menu.main_menu()
 
     def loadgame(self):
         pass
@@ -33,119 +54,6 @@ class Engine(object):
         pass
 
     def delete_player(self):
-        pass
-
-
-
-
-class Map(object):
-    """Spawn scenes and a list its locations."""
-
-    scenes = {
-    'start' : Start(),
-    'knockout' : Knockout(),
-    'ende' : Ende(),
-    'schwimmbad' : Schwimmbad(),
-    'abwasserkanal' : Abwasserkanal(),
-    }
-
-    def __init__(self, start_scene):
-        self.start_scene = start_scene
-
-    def create_doors(self):
-        pass
-
-
-
-class Item(object):
-    """Handle objects that can be obtained and used by the player."""
-    def __init__(self, name):
-        self.name = name
-
-    def loot_for_item(self):
-        pass
-
-class Door(object):
-    """Handle opening and closing of doors.
-    * Offener Durchgang
-    * Drehtuer
-    * Gitter
-    * Normale Tuer
-    * Getarnter Durchgang
-    * Schiebetuer
-    * Schwingtuer
-    """
-    def __init__(self, name, key):
-        self.name = name
-        self.key = key
-
-    def open_door(self):
-        pass
-
-    def close_door(self):
-        pass
-
-    def lock_door(self):
-        pass
-
-class Chest(object):
-    """Take in items and handle opening and closing of chests and loot.
-    * Treasure Chest
-    * Storage Chest
-    """
-    def __init__(self, name, content, key, type):
-        self.name = name
-        self.content = content
-
-    def open_chest(self):
-        pass
-
-class Trap(object):
-    """Handle state of trap, trigger it, calculate and return effect.
-    * Holzbalken
-    * Vereister See
-    """
-    def __init__(self, arg):
-        self.arg = arg
-
-    def snap(self):
-        pass
-
-class Agent(object):
-    """Keeps relevant data of NPC and handles behavior.
-    * Alia
-    * Gertrude, die Elster
-    * dicker Junge
-    * kleines Maedchen
-    * James
-    * Gerald, der Rabe
-    * Samira, die Fee
-    * Lisa
-    * Bergtroll
-    * Fledermaeuse
-    * Kraehen
-    """
-    def __init__(self, name, hitpoints, strenght):
-        self.name = name
-        self.hitpoints = hitpoints
-        self.strenght = strenght
-
-    def move(self):
-        pass
-
-    def talk(self):
-        pass
-
-    def give_item(self):
-        pass
-
-    def take_item(self):
-        pass
-
-    def attack(self):
-        pass
-
-    def defend(self):
         pass
 
 class Player(object):
@@ -176,21 +84,9 @@ class Player(object):
     def mount_horse(self):
         pass
 
-class Mount(object):
-    """Handle behavior and data of mounts
-    * Ella
-    * Fella
-    * Gella
-    * Pink-Po
-    """
-    def __init__(self, name):
-        self.name = name
-
-    def move(self):
-        pass
-
-    def consume_food(self):
-        pass
-
-    def listern(self):
-        pass
+the_navigation = Navigation(game_map)
+#print help(the_navigation)
+the_game = Engine(the_navigation)
+#print help(the_game)
+menu = Menu()
+the_game.playgame()

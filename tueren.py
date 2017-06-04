@@ -1,6 +1,6 @@
 #doors
 
-class Tuer(object):
+class Door(object):
     """Handle opening and closing of doors.
     * Offener Durchgang
     * Drehtuer
@@ -23,6 +23,8 @@ class Tuer(object):
     def lock_door(self):
         pass
 
-doors = {
+Gitter = Door('Unterwassergitter', None)
 
+doors = {
+'gitter' : Gitter,
 }

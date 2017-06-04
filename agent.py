@@ -1,17 +1,5 @@
 class Agent(object):
-    """Keeps relevant data of NPC and handles behavior.
-    * Alia
-    * Gertrude, die Elster
-    * dicker Junge
-    * kleines Maedchen
-    * James
-    * Gerald, der Rabe
-    * Samira, die Fee
-    * Lisa
-    * Bergtroll
-    * Fledermaeuse
-    * Kraehen
-    """
+    """Keeps relevant data of NPC and handles behavior."""
     def __init__(self, name, hitpoints, strenght):
         self.name = name
         self.hitpoints = hitpoints
@@ -34,3 +22,15 @@ class Agent(object):
 
     def defend(self):
         pass
+
+alia = Agent('Alia', 50, 1)
+gertrude = Agent('Gertrude', 50, 1)
+dicker_junge = Agent('Marek', 50, 1)
+keines_maedchen = Agent('Sophia', 50, 1)
+james = Agent('james', 50, 1)
+gerald = Agent('Gerald', 50, 1)
+samira = Agent('samira', 50, 1)
+lisa = Agent('lisa', 50, 1)
+bergtroll = Agent('Gronkh', 50, 1)
+fledermaeuse = Agent('Die 3 Fledermaeuse', 50, 1)
+kraehen = Agent('Die 3 Kraehen', 50, 1)

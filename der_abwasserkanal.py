@@ -1,7 +1,7 @@
 #der Abwasserkanal
 
 class Abwasserkanal(object):
-    loc_index = 7
+    loc_index = 8
     def enter(self):
         if first_visit:
             print "Du bist im Abwasserkanal."
@@ -9,6 +9,11 @@ class Abwasserkanal(object):
             print "Du warst schon eimal hier."
 abwasserkanal = Abwasserkanal()
 
-locations = {
-'Abwasserkanal' : abwasserkanal,
-}
+class Weggabelung(object):
+    loc_index = 9
+    def enter(self):
+        if first_visit:
+            print "Du bist an der Weggabelung im Abwasserkanal."
+        else:
+            print "Du warst schon eimal hier."
+abwasserkanal = Abwasserkanal()
