@@ -7,8 +7,8 @@ import chest
 import item
 import game_map
 
-
 class Menu(object):
+
     def main_menu(self):
         print """
         Neues Spiel   (0)
@@ -16,7 +16,7 @@ class Menu(object):
         Spiel beenden (2)
         """
         action = raw_input("Bitte waehle eine Option: ")
-        return action
+        return str(action)
 
     def context_menu(self):
         action = raw_input("Bitte waehle eine Option: ")
@@ -29,11 +29,12 @@ class Navigation(object):
 
     def next_scene(self):
         """return a list of possible next scenes"""
-        pass
+        # current_scene =
+        # next_scene =
 
-    def opening_scene(self):
-        """return opening scene"""
-        pass
+    def available_locations(self):
+        """return a list of available locations next scenes"""
+        # available_locations =
 
 class Engine(object):
     """Takes in the navigation, plays the game, handles savegames and players."""
@@ -43,17 +44,22 @@ class Engine(object):
     def playgame(self):
         """Show Textblock followed by Menu of available options."""
         menu.main_menu()
+        print menu.action
 
     def loadgame(self):
+        """Restore a game session based on a player name string."""
         pass
 
     def savegame(self):
+        """write current state entire game session to a file."""
         pass
 
     def create_player(self):
+        """define a new player name, gender and generate hitpoints randomly"""
         pass
 
     def delete_player(self):
+        """truncate one players data from disk"""
         pass
 
 class Player(object):
