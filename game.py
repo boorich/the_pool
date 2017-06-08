@@ -1,4 +1,6 @@
 from sys import exit
+import random
+import pickle
 
 import agent
 import mount
@@ -16,7 +18,8 @@ class Menu(object):
         Spiel beenden (2)
         """
         action = raw_input("Bitte waehle eine Option: ")
-        return str(action)
+        return action
+        print "exiting here!"
 
     def context_menu(self):
         action = raw_input("Bitte waehle eine Option: ")
@@ -43,8 +46,22 @@ class Engine(object):
 
     def playgame(self):
         """Show Textblock followed by Menu of available options."""
-        menu.main_menu()
-        print menu.action
+        print "-*" * 30
+        action = str(menu.main_menu())
+        print action
+        if action is '0':
+            new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), None, None, None)
+            #implement: new_game()
+            # save current game()
+        elif action is '1':
+            pass
+            #implement: load_game()
+        elif action is '2':
+            print 'Auf wiedersehen.'
+            exit(1)
+        else:
+            print "Fick die Mutter, Hitler, Ahoi!"
+        print "@playgame() bottom"
 
     def loadgame(self):
         """Restore a game session based on a player name string."""
@@ -64,10 +81,12 @@ class Engine(object):
 
 class Player(object):
     """Keeps relevant data of player and handles behavior."""
-    def __init__(self, name, gender, hitpoints, items, mount):
+    def __init__(self, name, gender, age, strength, items, mount):
         self.name = name
-        self.hitpoints = hitpoints
-        self.strenght = strenght
+        self.gender = gender
+        self.age = age
+        self.hitpoints = age * float(random.uniform(1,2))
+        self.strenght = strength
 
     def move(self):
         pass
