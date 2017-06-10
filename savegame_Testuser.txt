@@ -1,0 +1,16 @@
+(dp0
+I1
+S'Testuser'
+p1
+sI2
+S'kdgb'
+p2
+sI3
+F34.0
+sI4
+F50.416079080450395
+sI5
+F64.35835012050549
+sI6
+NsI7
+Ns.
