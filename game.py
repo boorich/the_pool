@@ -1,15 +1,25 @@
 from sys import exit
+from glob import glob
 import random
 import pickle
 
-import agent
-import mount
-import trap
-import chest
-import item
-import game_map
+from styles import *
+from agent import *
+from mount import *
+from trap import *
+from chest import *
+from item import *
+from game_map import *
 
 class Menu(object):
+
+    def __init__(self, styles):
+        self.styles = styles
+
+    def menu_handler(self):
+        """Take in return strings and display context menus accordingly."""
+        action = return_string
+        return action
 
     def main_menu(self):
         print """
@@ -18,10 +28,8 @@ class Menu(object):
         Spiel beenden (2)
         """
         action = raw_input("Bitte waehle eine Option: ")
-        return action
-
-    def context_menu(self):
-        action = raw_input("Bitte waehle eine Option: ")
+        print "\n"
+        styles.flower()
         return action
 
 class Navigation(object):
@@ -87,17 +95,16 @@ class Engine(object):
 
     def playgame(self):
         """Show Textblock followed by Menu of available options."""
-        print "-*" * 30
+        styles.flower()
         action = str(menu.main_menu())
-        print action
         if action is '0':
             self.create_player()
-            raw_input('Moechtest du diesen Spieler jetzt abspeichernm dann druecke bitte die Enter Taste.')
+            raw_input('Moechtest du diesen Spieler jetzt abspeichern, dann druecke bitte die Enter Taste.')
             self.savegame()
-            #implement: new_game()
-
         elif action is '1':
-            pass
+            #print "\nHier beginnt deine Reise, %s. ich oeffne das entsprechende File fuer dich." % player.name
+            self.loadgame()
+            exit(1)
             #implement: load_game()
         elif action is '2':
             print 'Auf wiedersehen.'
@@ -105,15 +112,22 @@ class Engine(object):
         else:
             print "Das habe ich nicht verstanden"
 
+
     def savegame(self):
         """write current state entire game session to a file."""
-        pickle_out = open ("savegame.txt", 'w')
+        pickle_out = open ('savegame_' + str(player.name)+ '.txt', 'w+')
         player.player_dict = pickle.dump(player.player_dict, pickle_out)
         pickle_out.close()
+        print "\nSpieler >> %s << gespeichert.\n" % player.name#
+        styles.flower()
 
     def loadgame(self):
         """Restore a game session based on a player name string."""
-        pass
+        savegames = glob("savegame*") #creates a list of available savegames on disk
+        print "Du moechtest ein Spiel laden? In Ordnung, bitte waehle deinen Spieler:\n"
+        for entries in savegames:
+            #to do: format the strings to only display the name of the player
+            print ">> %s <<" % entries
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
@@ -132,5 +146,7 @@ the_navigation = Navigation(game_map)
 #print help(the_navigation)
 the_game = Engine(the_navigation)
 #print help(the_game)
-menu = Menu()
+styles = Styles(None)
+menu = Menu(styles)
+menu.styles.flower
 the_game.playgame()
