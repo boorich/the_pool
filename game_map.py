@@ -42,6 +42,21 @@ class Map(object):
     'ende' : Ende(),
     }
 
+    scenemapper = {
+    #Das Schwimmbad
+    'start' : 'schwimmbad',
+    'liegewiese' : 'schwimmbad',
+    'gertudesbaum' : 'schwimmbad',
+    'beckenrand' : 'schwimmbad',
+    'sprungturm' : 'schwimmbad',
+    'schwimmbecken' : 'schwimmbad',
+    'imbiss' : 'schwimmbad',
+    'kassenhaus' : 'schwimmbad',
+
+    #Der Abwasserkanal
+    'weggabelung' : 'abwasserkanal',
+    }
+
     locations = {
     #Das Schwimmbad
     'liegewiese' : Liegewiese(),

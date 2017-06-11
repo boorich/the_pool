@@ -19,7 +19,8 @@ class Player(object):
         4 : self.strength,
         5 : self.hitpoints,
         6 : self.items,
-        7 : self.mount
+        7 : self.mount,
+        8 : self.location
         }
     
     def enter(self):

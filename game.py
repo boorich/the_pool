@@ -44,19 +44,28 @@ class Navigation(object):
     def __init__(self, gamemap):
         self.gamemap = gamemap
 
-    def next_scene(self):
+    def next_scene(self, last_scene):
         """return a list of possible next scenes"""
-        # current_scene =
+        #evaluate = last scene
+        print the_navigation.gamemap.scenemapper
+        '''for i in the_navigation.gamemap.scenemapper:
+            entry = [i]
+            print i'''
+        
+        available_locations = {}
+        for k, v in the_navigation.gamemap.scenemapper.iteritems():
+            available_locations.setdefault(v, []).append(k)
+
+        print available_locations
+        #the_navigation.next_scene(player[8]) <--- Diesen call zum Laufen bringen       
         # next_scene =
 
-    def available_locations(self):
-        """return a list of available locations next scenes"""
-        # available_locations =
 
 class Engine(object):
     """Takes in the navigation, plays the game, handles savegames and players."""
-    def __init__(self, navigation):
+    def __init__(self, navigation, player):
         self.navigation = navigation
+        self.player = player
 
     def playgame(self):
         """Show Textblock followed by Menu of available options."""
@@ -75,8 +84,10 @@ class Engine(object):
             exit(1)
         else:
             print "Das habe ich nicht verstanden"
-        print "Das Spiel beginnt hier: %s" % player.location
-        the_navigation.next_scene()
+
+        print "Das Spiel beginnt hier: %s" % player[8]
+
+        the_navigation.next_scene(player[8])
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
@@ -117,7 +128,7 @@ class Engine(object):
 
 the_navigation = Navigation(game_map)
 
-the_game = Engine(the_navigation)
+the_game = Engine(the_navigation, None)
 
 
 styles = Styles(None)
@@ -128,9 +139,9 @@ menu.styles.flower
 
 the_game.playgame()
 
-knockout = Knockout()
+'''knockout = Knockout()
 knockout.enter()
 
 ende = Ende()
 ende.enter()
-
+'''
