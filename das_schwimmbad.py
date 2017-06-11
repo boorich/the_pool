@@ -1,4 +1,10 @@
-#das schwimmbad
+from doors import *
+
+doors = {
+
+'to_kanal' : uwgitter
+
+}
 
 class Liegewiese(object):
     loc_index = 0

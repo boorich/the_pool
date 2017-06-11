@@ -1,4 +1,3 @@
-#doors
 
 class Door(object):
     """Handle opening and closing of doors.
@@ -23,8 +22,4 @@ class Door(object):
     def lock_door(self):
         pass
 
-Gitter = Door('Unterwassergitter', None)
-
-doors = {
-'gitter' : Gitter,
-}
+uwgitter = Door('Unterwassergitter', None)

@@ -33,6 +33,12 @@ class Menu(object):
         styles.flower()
         return action
 
+    def help_menu(self):
+        print"""
+        Spiel verlassen     (Strg+C)
+        Hauptmenue           (Home)
+        """
+
 class Navigation(object):
     """Take in Map and handle all possible locations, track current location, find next possible location."""
     def __init__(self, gamemap):
@@ -67,6 +73,9 @@ class Player(object):
         6 : self.items,
         7 : self.mount
         }
+    
+    def enter(self):
+        pass
 
     def move(self):
         pass
@@ -104,15 +113,15 @@ class Engine(object):
             raw_input('Moechtest du diesen Spieler jetzt abspeichern, dann druecke bitte die Enter Taste.')
             self.savegame()
         elif action is '1':
-            #print "\nHier beginnt deine Reise, %s. ich oeffne das entsprechende File fuer dich." % player.name
             player = self.loadgame()
+            print "\nHier beginnt deine Reise, %s. ich oeffne das entsprechende File fuer dich." % player[1]
         elif action is '2':
             print 'Auf wiedersehen.'
             exit(1)
         else:
             print "Das habe ich nicht verstanden"
-        
-        print "Das Spiel beginnt hier."
+        while True:
+            print "Das Spiel beginnt hier."
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
@@ -158,4 +167,13 @@ the_game = Engine(the_navigation)
 styles = Styles(None)
 menu = Menu(styles)
 menu.styles.flower
+
+
 the_game.playgame()
+
+knockout = Knockout()
+knockout.enter()
+
+ende = Ende()
+ende.enter()
+
