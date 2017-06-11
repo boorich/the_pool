@@ -1,9 +1,9 @@
 import os
 from sys import exit
-from glob import glob
-import random
+from glob import glob 
 import pickle
 
+from player import *
 from styles import *
 from agent import *
 from mount import *
@@ -53,51 +53,6 @@ class Navigation(object):
         """return a list of available locations next scenes"""
         # available_locations =
 
-class Player(object):
-    """Keeps relevant data of player and handles behavior."""
-    def __init__(self, name, gender, age, items, mount):
-        self.name = name
-        self.gender = gender
-        self.age = age
-        self.strength = age * float(random.uniform(1,2))
-        self.hitpoints = age * float(random.uniform(1,2))
-        self.items = items
-        self.mount = mount
-
-        self.player_dict = {
-        1 : self.name,
-        2 : self.gender,
-        3 : self.age,
-        4 : self.strength,
-        5 : self.hitpoints,
-        6 : self.items,
-        7 : self.mount
-        }
-    
-    def enter(self):
-        pass
-
-    def move(self):
-        pass
-
-    def talk(self):
-        pass
-
-    def give_item(self):
-        pass
-
-    def take_item(self):
-        pass
-
-    def attack(self):
-        pass
-
-    def defend(self):
-        pass
-
-    def mount_horse(self):
-        pass
-
 class Engine(object):
     """Takes in the navigation, plays the game, handles savegames and players."""
     def __init__(self, navigation):
@@ -120,12 +75,12 @@ class Engine(object):
             exit(1)
         else:
             print "Das habe ich nicht verstanden"
-        while True:
-            print "Das Spiel beginnt hier."
+        print "Das Spiel beginnt hier: %s" % player.location
+        the_navigation.next_scene()
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
-        new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), None, None)
+        new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Startpunkt: '), None, None)
         #help(new_player)
         print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (new_player.name, new_player.gender, int(new_player.age))
         print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn diese Spiels.\n' % (int(new_player.strength), int(new_player.hitpoints))
@@ -161,10 +116,12 @@ class Engine(object):
         pass
 
 the_navigation = Navigation(game_map)
-#print help(the_navigation)
+
 the_game = Engine(the_navigation)
-#print help(the_game)
+
+
 styles = Styles(None)
+
 menu = Menu(styles)
 menu.styles.flower
 
