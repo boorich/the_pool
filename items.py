@@ -1,0 +1,12 @@
+Haarspange
+Cheeseburger
+Brotkrumen
+Käse
+Hundepfeife
+Reitgerte
+Pferdeshampoo
+Waschbürste
+Heu
+Apfel
+Karotte
+Sattel

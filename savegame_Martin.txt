@@ -1,0 +1,16 @@
+(dp0
+I1
+S'Martin'
+p1
+sI2
+S'm\x84nnlich'
+p2
+sI3
+F37.0
+sI4
+F55.805866435139706
+sI5
+F38.73158047231984
+sI6
+NsI7
+Ns.
