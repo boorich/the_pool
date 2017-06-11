@@ -46,17 +46,12 @@ class Navigation(object):
 
     def next_scene(self, last_scene):
         """return a list of possible next scenes"""
-        #evaluate = last scene
-        print the_navigation.gamemap.scenemapper
-        '''for i in the_navigation.gamemap.scenemapper:
-            entry = [i]
-            print i'''
-        
         available_locations = {}
         for k, v in the_navigation.gamemap.scenemapper.iteritems():
             available_locations.setdefault(v, []).append(k)
 
         print available_locations
+        return
         #the_navigation.next_scene(player[8]) <--- Diesen call zum Laufen bringen       
         # next_scene =
 
@@ -73,28 +68,27 @@ class Engine(object):
         action = str(menu.main_menu())
         if action is '0':
             player = self.create_player()
-            print player
             raw_input('Moechtest du diesen Spieler jetzt abspeichern, dann druecke bitte die Enter Taste.')
             self.savegame()
+            player = self.loadinstant(player.name)
         elif action is '1':
             player = self.loadgame()
-            print "\nHier beginnt deine Reise, %s. ich oeffne das entsprechende File fuer dich." % player[1]
+            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer." % player[1]
         elif action is '2':
             print 'Auf wiedersehen.'
             exit(1)
         else:
             print "Das habe ich nicht verstanden"
 
-        print "Das Spiel beginnt hier: %s" % player[8]
-
+        #print "Das Spiel beginnt hier: %s" % player[8]
         the_navigation.next_scene(player[8])
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
-        new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Startpunkt: '), None, None)
+        new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), 'start', None, None)
         #help(new_player)
         print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (new_player.name, new_player.gender, int(new_player.age))
-        print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn diese Spiels.\n' % (int(new_player.strength), int(new_player.hitpoints))
+        print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(new_player.strength), int(new_player.hitpoints))
         global player
         player = new_player
         return player
@@ -104,17 +98,26 @@ class Engine(object):
         pickle_out = open ('savegame_' + str(player.name) + '.txt', 'w+')
         player.player_dict = pickle.dump(player.player_dict, pickle_out)
         pickle_out.close()
-        print "\nSpieler >> %s << gespeichert.\n" % player.name#
-        styles.flower()
+        print "\nSpieler >> %s << gespeichert.\n" % player.name
 
     def loadgame(self):
-        """Restore a game session based on a player name string."""
+        """Restore a game session based on a raw input of player name string."""
         savegames = glob("savegame*") #creates a list of available savegames on disk
         print "Du moechtest ein Spiel laden? In Ordnung, bitte waehle deinen Spieler:\n"
         for entries in savegames:
             #to do: format the strings to only display the name of the player
             print "        %s\n" % entries.rstrip('.txt').lstrip('savegame_')
         action = raw_input('>> ')
+        pickle_in = open ('savegame_' + action + '.txt', 'r+')
+        restored_player = pickle.load(pickle_in)
+        styles.flower()
+        print "In Ordnung, %s. Legen wir los." % restored_player[1]
+        print restored_player
+        return restored_player
+
+    def loadinstant(self, name):
+        """Restore a game session based on a passed player name string."""
+        action = name
         pickle_in = open ('savegame_' + action + '.txt', 'r+')
         restored_player = pickle.load(pickle_in)
         styles.flower()

@@ -54,7 +54,8 @@ class Map(object):
     'kassenhaus' : 'schwimmbad',
 
     #Der Abwasserkanal
-    'weggabelung' : 'abwasserkanal',
+    'abwasserkanal' : 'abwasserkanal',
+    'weggabelung' : 'abwasserkanal'
     }
 
     locations = {

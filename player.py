@@ -13,14 +13,14 @@ class Player(object):
         self.location = location
 
         self.player_dict = {
-        1 : self.name,
-        2 : self.gender,
-        3 : self.age,
-        4 : self.strength,
-        5 : self.hitpoints,
-        6 : self.items,
-        7 : self.mount,
-        8 : self.location
+            1 : self.name,
+            2 : self.gender,
+            3 : self.age,
+            4 : self.strength,
+            5 : self.hitpoints,
+            6 : self.items,
+            7 : self.mount,
+            8 : self.location
         }
     
     def enter(self):
