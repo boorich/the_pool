@@ -37,39 +37,39 @@ class Map(object):
     """Spawn scenes and a list its locations."""
 
     scenes = {
-    'start' : Start(),
-    'knockout' : Knockout(),
-    'ende' : Ende(),
+        'start' : Start(),
+        'knockout' : Knockout(),
+        'ende' : Ende(),
     }
 
     scenemapper = {
-    #Das Schwimmbad
-    'start' : 'schwimmbad',
-    'liegewiese' : 'schwimmbad',
-    'gertudesbaum' : 'schwimmbad',
-    'beckenrand' : 'schwimmbad',
-    'sprungturm' : 'schwimmbad',
-    'schwimmbecken' : 'schwimmbad',
-    'imbiss' : 'schwimmbad',
-    'kassenhaus' : 'schwimmbad',
+        #Das Schwimmbad
+        'start' : 'schwimmbad',
+        'liegewiese' : 'schwimmbad',
+        'gertudesbaum' : 'schwimmbad',
+        'beckenrand' : 'schwimmbad',
+        'sprungturm' : 'schwimmbad',
+        'schwimmbecken' : 'schwimmbad',
+        'imbiss' : 'schwimmbad',
+        'kassenhaus' : 'schwimmbad',
 
-    #Der Abwasserkanal
-    'abwasserkanal' : 'abwasserkanal',
-    'weggabelung' : 'abwasserkanal'
+        #Der Abwasserkanal
+        'abwasserkanal' : 'abwasserkanal',
+        'weggabelung' : 'abwasserkanal'
     }
 
     locations = {
-    #Das Schwimmbad
-    'liegewiese' : Liegewiese(),
-    'gertudesbaum' : GertrudesBaum(),
-    'beckenrand' : Beckenrand(),
-    'sprungturm' : Sprungturm(),
-    'schwimmbecken' : Schwimmbecken(),
-    'imbiss' : Imbiss(),
-    'kassenhaus' : Kassenhaus(),
+        #Das Schwimmbad
+        'liegewiese' : Liegewiese(),
+        'gertudesbaum' : GertrudesBaum(),
+        'beckenrand' : Beckenrand(),
+        'sprungturm' : Sprungturm(),
+        'schwimmbecken' : Schwimmbecken(),
+        'imbiss' : Imbiss(),
+        'kassenhaus' : Kassenhaus(),
 
-    #Der Abwasserkanal
-    'weggabelung' : Weggabelung(),
+        #Der Abwasserkanal
+        'weggabelung' : Weggabelung(),
     }
 
     def __init__(self, start_scene):

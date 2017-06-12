@@ -13,6 +13,7 @@ class Liegewiese(object):
             print "Du befindest die auf der Liegewiese des Schwimmbads."
         else:
             print "Du warst schon eimal hier."
+liegewiese = Liegewiese()
 
 class GertrudesBaum(object):
     loc_index = 1

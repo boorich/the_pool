@@ -51,9 +51,24 @@ class Navigation(object):
             available_locations.setdefault(v, []).append(k)
 
         print available_locations
-        return
-        #the_navigation.next_scene(player[8]) <--- Diesen call zum Laufen bringen       
-        # next_scene =
+        '''
+        print available_locations['schwimmbad']
+        cool_list = available_locations['schwimmbad']
+        print cool_list[0]
+        '''
+        
+        '''        
+        dic = { 'key1': ["value1",  "value2"],
+                'key2': ["value77", "something"] }
+        "value77" in [x for v in dic.values() for x in v]'''
+
+        
+        '''        
+        if 'start' in [x for v in available_locations.values() for x in v]:
+            return the k 
+        else:
+            pass
+        '''
 
 
 class Engine(object):
@@ -112,7 +127,19 @@ class Engine(object):
         restored_player = pickle.load(pickle_in)
         styles.flower()
         print "In Ordnung, %s. Legen wir los." % restored_player[1]
-        print restored_player
+        print '''
+        Hier siehst du Details ueber deinen Helden:
+        
+        Name:           %s
+        Geschlecht:     %s
+        Alter:          %s Jahre
+        Angriff:        %s
+        Lebenspunkte:   %s
+        Reittier:       %s
+
+        Aktueller Ort:  %s
+        ''' % (restored_player[1], restored_player[2], int(restored_player[3]), int(restored_player[4]), int(restored_player[5]), restored_player[7],restored_player[8])
+        
         return restored_player
 
     def loadinstant(self, name):
@@ -122,7 +149,19 @@ class Engine(object):
         restored_player = pickle.load(pickle_in)
         styles.flower()
         print "In Ordnung, %s. Legen wir los." % restored_player[1]
-        print restored_player
+        print '''
+        Hier siehst du Details ueber deinen Helden:
+        
+        Name:           %s
+        Geschlecht:     %s
+        Alter:          %s Jahre
+        Angriff:        %s
+        Lebenspunkte:   %s
+        Reittier:       %s
+
+        Aktueller Ort:  %s
+        ''' % (restored_player[1], restored_player[2], int(restored_player[3]), int(restored_player[4]), int(restored_player[5]), restored_player[7],restored_player[8])
+
         return restored_player
 
     def delete_player(self, name):
