@@ -1,9 +1,9 @@
 import os
 from sys import exit
-from glob import glob
-import random
+from glob import glob 
 import pickle
 
+from player import *
 from styles import *
 from agent import *
 from mount import *
@@ -11,6 +11,8 @@ from trap import *
 from chest import *
 from item import *
 from game_map import *
+
+player = None
 
 class Menu(object):
 
@@ -40,68 +42,31 @@ class Menu(object):
         """
 
 class Navigation(object):
-    """Take in Map and handle all possible locations, track current location, find next possible location."""
-    def __init__(self, gamemap):
+    """Take in Map and the player handle all possible locations, track current location, find next possible location."""
+    def __init__(self, gamemap, player):
+        self.player = player
         self.gamemap = gamemap
 
-    def next_scene(self):
+    def next_scene(self, last_scene):
         """return a list of possible next scenes"""
-        # current_scene =
-        # next_scene =
-
-    def available_locations(self):
-        """return a list of available locations next scenes"""
-        # available_locations =
-
-class Player(object):
-    """Keeps relevant data of player and handles behavior."""
-    def __init__(self, name, gender, age, items, mount):
-        self.name = name
-        self.gender = gender
-        self.age = age
-        self.strength = age * float(random.uniform(1,2))
-        self.hitpoints = age * float(random.uniform(1,2))
-        self.items = items
-        self.mount = mount
-
-        self.player_dict = {
-        1 : self.name,
-        2 : self.gender,
-        3 : self.age,
-        4 : self.strength,
-        5 : self.hitpoints,
-        6 : self.items,
-        7 : self.mount
-        }
-    
-    def enter(self):
-        pass
-
-    def move(self):
-        pass
-
-    def talk(self):
-        pass
-
-    def give_item(self):
-        pass
-
-    def take_item(self):
-        pass
-
-    def attack(self):
-        pass
-
-    def defend(self):
-        pass
-
-    def mount_horse(self):
-        pass
+        available_locations = {}
+        for k, v in the_navigation.gamemap.scenemapper.iteritems():
+            available_locations.setdefault(v, []).append(k)
+              
+        for k, v in available_locations.iteritems():
+            if player.location in v:
+                print "Hier wird nur k ermittelt."
+        '''
+        #check if string is in dictionary       
+        if 'start' in [x for v in available_locations.values() for x in v]:
+            #do something
+        '''
 
 class Engine(object):
     """Takes in the navigation, plays the game, handles savegames and players."""
-    def __init__(self, navigation):
+    def __init__(self, navigation, player):
         self.navigation = navigation
+        self.player = player
 
     def playgame(self):
         """Show Textblock followed by Menu of available options."""
@@ -109,26 +74,27 @@ class Engine(object):
         action = str(menu.main_menu())
         if action is '0':
             player = self.create_player()
-            print player
             raw_input('Moechtest du diesen Spieler jetzt abspeichern, dann druecke bitte die Enter Taste.')
             self.savegame()
+            player = self.loadinstant(player.name)
         elif action is '1':
             player = self.loadgame()
-            print "\nHier beginnt deine Reise, %s. ich oeffne das entsprechende File fuer dich." % player[1]
+            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer." % player[1]
         elif action is '2':
             print 'Auf wiedersehen.'
             exit(1)
         else:
             print "Das habe ich nicht verstanden"
-        while True:
-            print "Das Spiel beginnt hier."
+
+        #print "Das Spiel beginnt hier: %s" % player[8]
+        print "Du bist im %s. Hier gibt es folgende Orte, an denen du dich umsehen koenntest." % the_navigation.next_scene(player[8])
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
-        new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), None, None)
+        new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), 'start', None, None)
         #help(new_player)
         print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (new_player.name, new_player.gender, int(new_player.age))
-        print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn diese Spiels.\n' % (int(new_player.strength), int(new_player.hitpoints))
+        print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(new_player.strength), int(new_player.hitpoints))
         global player
         player = new_player
         return player
@@ -138,11 +104,10 @@ class Engine(object):
         pickle_out = open ('savegame_' + str(player.name) + '.txt', 'w+')
         player.player_dict = pickle.dump(player.player_dict, pickle_out)
         pickle_out.close()
-        print "\nSpieler >> %s << gespeichert.\n" % player.name#
-        styles.flower()
+        print "\nSpieler >> %s << gespeichert.\n" % player.name
 
     def loadgame(self):
-        """Restore a game session based on a player name string."""
+        """Restore a game session based on a raw input of player name string."""
         savegames = glob("savegame*") #creates a list of available savegames on disk
         print "Du moechtest ein Spiel laden? In Ordnung, bitte waehle deinen Spieler:\n"
         for entries in savegames:
@@ -153,27 +118,63 @@ class Engine(object):
         restored_player = pickle.load(pickle_in)
         styles.flower()
         print "In Ordnung, %s. Legen wir los." % restored_player[1]
-        print restored_player
+        print '''
+        Hier siehst du Details ueber deinen Helden:
+        
+        Name:           %s
+        Geschlecht:     %s
+        Alter:          %s Jahre
+        Angriff:        %s
+        Lebenspunkte:   %s
+        Reittier:       %s
+
+        Aktueller Ort:  %s
+        ''' % (restored_player[1], restored_player[2], int(restored_player[3]), int(restored_player[4]), int(restored_player[5]), restored_player[7],restored_player[8])
+        
+        return restored_player
+
+    def loadinstant(self, name):
+        """Restore a game session based on a passed player name string."""
+        action = name
+        pickle_in = open ('savegame_' + action + '.txt', 'r+')
+        restored_player = pickle.load(pickle_in)
+        styles.flower()
+        print "In Ordnung, %s. Legen wir los." % restored_player[1]
+        print '''
+        Hier siehst du Details ueber deinen Helden:
+        
+        Name:           %s
+        Geschlecht:     %s
+        Alter:          %s Jahre
+        Angriff:        %s
+        Lebenspunkte:   %s
+        Reittier:       %s
+
+        Aktueller Ort:  %s
+        ''' % (restored_player[1], restored_player[2], int(restored_player[3]), int(restored_player[4]), int(restored_player[5]), restored_player[7],restored_player[8])
+
         return restored_player
 
     def delete_player(self, name):
         """truncate one players data from disk"""
         pass
 
-the_navigation = Navigation(game_map)
-#print help(the_navigation)
-the_game = Engine(the_navigation)
-#print help(the_game)
+the_navigation = Navigation(game_map, player)
+
+the_game = Engine(the_navigation, None)
+
+
 styles = Styles(None)
+
 menu = Menu(styles)
 menu.styles.flower
 
 
 the_game.playgame()
 
-knockout = Knockout()
+'''knockout = Knockout()
 knockout.enter()
 
 ende = Ende()
 ende.enter()
-
+'''
