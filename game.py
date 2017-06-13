@@ -12,6 +12,8 @@ from chest import *
 from item import *
 from game_map import *
 
+player = None
+
 class Menu(object):
 
     def __init__(self, styles):
@@ -40,8 +42,9 @@ class Menu(object):
         """
 
 class Navigation(object):
-    """Take in Map and handle all possible locations, track current location, find next possible location."""
-    def __init__(self, gamemap):
+    """Take in Map and the player handle all possible locations, track current location, find next possible location."""
+    def __init__(self, gamemap, player):
+        self.player = player
         self.gamemap = gamemap
 
     def next_scene(self, last_scene):
@@ -49,27 +52,15 @@ class Navigation(object):
         available_locations = {}
         for k, v in the_navigation.gamemap.scenemapper.iteritems():
             available_locations.setdefault(v, []).append(k)
-
-        print available_locations
+              
+        for k, v in available_locations.iteritems():
+            if player.location in v:
+                print "Hier wird nur k ermittelt."
         '''
-        print available_locations['schwimmbad']
-        cool_list = available_locations['schwimmbad']
-        print cool_list[0]
-        '''
-        
-        '''        
-        dic = { 'key1': ["value1",  "value2"],
-                'key2': ["value77", "something"] }
-        "value77" in [x for v in dic.values() for x in v]'''
-
-        
-        '''        
+        #check if string is in dictionary       
         if 'start' in [x for v in available_locations.values() for x in v]:
-            return the k 
-        else:
-            pass
+            #do something
         '''
-
 
 class Engine(object):
     """Takes in the navigation, plays the game, handles savegames and players."""
@@ -96,7 +87,7 @@ class Engine(object):
             print "Das habe ich nicht verstanden"
 
         #print "Das Spiel beginnt hier: %s" % player[8]
-        the_navigation.next_scene(player[8])
+        print "Du bist im %s. Hier gibt es folgende Orte, an denen du dich umsehen koenntest." % the_navigation.next_scene(player[8])
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
@@ -168,7 +159,7 @@ class Engine(object):
         """truncate one players data from disk"""
         pass
 
-the_navigation = Navigation(game_map)
+the_navigation = Navigation(game_map, player)
 
 the_game = Engine(the_navigation, None)
 
