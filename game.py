@@ -14,6 +14,7 @@ from game_map import *
 
 player = None
 
+
 class Menu(object):
 
     def __init__(self, styles):
@@ -35,16 +36,31 @@ class Menu(object):
         styles.flower()
         return action
 
-    def help_menu(self):
-        print"""
-        Spiel verlassen     (Strg+C)
-        Hauptmenue           (Home)
-        """
+    def locations_menu(self, location, game_map):
+        self.location = location
+        self.game_map = game_map
+        print "Du bst an diesem Ort: %s " % self.location
+        print "Von hier kannst du folgende Orte besuchen: "
+        #print "Die Map: %s" % self.game_map
+    
+
+        poi_list = []
+        for k, v in self.game_map.scenemapper.iteritems():
+            if v == self.location:
+                poi_list.append(k)
+
+        def poi_format(poi_list):
+            for i in poi_list:
+                print i + '\n'
+        
+        poi_formatted = poi_format(poi_list)
+        return poi_formatted
+
 
 class Navigation(object):
     """Take in Map and the player handle all possible locations, track current location, find next possible location."""
-    def __init__(self, gamemap, player):
-        self.player = player
+    def __init__(self, gamemap):
+        #self.player = player
         self.gamemap = gamemap
 
     def next_scene(self, last_scene):
@@ -54,57 +70,57 @@ class Navigation(object):
             available_locations.setdefault(v, []).append(k)
               
         for k, v in available_locations.iteritems():
-            if player.location in v:
-                print "Hier wird nur k ermittelt."
+            if the_game.player[8] in v:
+                return k
+        
         '''
-        #check if string is in dictionary       
+        #noble way to check if string is in dictionary       
         if 'start' in [x for v in available_locations.values() for x in v]:
             #do something
         '''
 
 class Engine(object):
     """Takes in the navigation, plays the game, handles savegames and players."""
-    def __init__(self, navigation, player):
+    def __init__(self, navigation, the_player, the_menu):
         self.navigation = navigation
-        self.player = player
+        self.player = the_player
+        self.menu = the_menu
 
     def playgame(self):
         """Show Textblock followed by Menu of available options."""
         styles.flower()
-        action = str(menu.main_menu())
+        action = str(the_menu.main_menu())
         if action is '0':
-            player = self.create_player()
+            self.player = self.create_player()
             raw_input('Moechtest du diesen Spieler jetzt abspeichern, dann druecke bitte die Enter Taste.')
             self.savegame()
-            player = self.loadinstant(player.name)
+            self.player = self.loadinstant(self.player)
         elif action is '1':
-            player = self.loadgame()
-            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer." % player[1]
+            self.player = self.loadgame()
+            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer." % self.player[1]
         elif action is '2':
             print 'Auf wiedersehen.'
             exit(1)
         else:
             print "Das habe ich nicht verstanden"
 
-        #print "Das Spiel beginnt hier: %s" % player[8]
-        print "Du bist im %s. Hier gibt es folgende Orte, an denen du dich umsehen koenntest." % the_navigation.next_scene(player[8])
+        #print "Du bist im %s. Hier gibt es folgende Orte, an denen du dich umsehen koenntest." % the_navigation.next_scene(self.player[8])
+        print the_menu.locations_menu(the_navigation.next_scene(self.player[8]), game_map)
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
-        new_player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), 'start', None, None)
+        self.player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Start: '), None, None)
         #help(new_player)
-        print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (new_player.name, new_player.gender, int(new_player.age))
-        print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(new_player.strength), int(new_player.hitpoints))
-        global player
-        player = new_player
-        return player
+        print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (self.player.name, self.player.gender, int(self.player.age))
+        print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(self.player.strength), int(self.player.hitpoints))
+        return self.player
 
     def savegame(self):
         """write current state entire game session to a file."""
-        pickle_out = open ('savegame_' + str(player.name) + '.txt', 'w+')
-        player.player_dict = pickle.dump(player.player_dict, pickle_out)
+        pickle_out = open ('savegame_' + str(self.player.name) + '.txt', 'w+')
+        self.player.player_dict = pickle.dump(self.player.player_dict, pickle_out)
         pickle_out.close()
-        print "\nSpieler >> %s << gespeichert.\n" % player.name
+        print "\nSpieler >> %s << gespeichert.\n" % self.player.name
 
     def loadgame(self):
         """Restore a game session based on a raw input of player name string."""
@@ -115,9 +131,9 @@ class Engine(object):
             print "        %s\n" % entries.rstrip('.txt').lstrip('savegame_')
         action = raw_input('>> ')
         pickle_in = open ('savegame_' + action + '.txt', 'r+')
-        restored_player = pickle.load(pickle_in)
+        self.player = pickle.load(pickle_in)
         styles.flower()
-        print "In Ordnung, %s. Legen wir los." % restored_player[1]
+        print "In Ordnung, %s. Legen wir los." % self.player[1]
         print '''
         Hier siehst du Details ueber deinen Helden:
         
@@ -129,14 +145,14 @@ class Engine(object):
         Reittier:       %s
 
         Aktueller Ort:  %s
-        ''' % (restored_player[1], restored_player[2], int(restored_player[3]), int(restored_player[4]), int(restored_player[5]), restored_player[7],restored_player[8])
+        ''' % (self.player[1], self.player[2], int(self.player[3]), int(self.player[4]), int(self.player[5]), self.player[7], self.player[8])
         
-        return restored_player
+        return self.player
 
-    def loadinstant(self, name):
+    def loadinstant(self, player):
         """Restore a game session based on a passed player name string."""
-        action = name
-        pickle_in = open ('savegame_' + action + '.txt', 'r+')
+        player = self.player.name
+        pickle_in = open ('savegame_' + player + '.txt', 'r+')
         restored_player = pickle.load(pickle_in)
         styles.flower()
         print "In Ordnung, %s. Legen wir los." % restored_player[1]
@@ -159,20 +175,19 @@ class Engine(object):
         """truncate one players data from disk"""
         pass
 
-the_navigation = Navigation(game_map, player)
-
-the_game = Engine(the_navigation, None)
-
 
 styles = Styles(None)
+the_menu = Menu(styles)
+the_menu.styles.flower
 
-menu = Menu(styles)
-menu.styles.flower
-
+the_player = Player(1, 2, 3, 4, 5, 6)
+the_navigation = Navigation(game_map)
+the_game = Engine(the_navigation, the_player, the_menu)
 
 the_game.playgame()
 
-'''knockout = Knockout()
+'''
+knockout = Knockout()
 knockout.enter()
 
 ende = Ende()

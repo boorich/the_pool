@@ -11,7 +11,6 @@ class Player(object):
         self.items = items
         self.mount = mount
         self.location = location
-        self.game_map = game_map
 
         self.player_dict = {
             1 : self.name,

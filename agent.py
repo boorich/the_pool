@@ -34,3 +34,4 @@ lisa = Agent('lisa', 50, 1)
 bergtroll = Agent('Gronkh', 50, 1)
 fledermaeuse = Agent('Die 3 Fledermaeuse', 50, 1)
 kraehen = Agent('Die 3 Kraehen', 50, 1)
+
