@@ -40,6 +40,7 @@ class Menu(object):
         self.location = location
         self.game_map = game_map
         print "Du bist an diesem Ort: %s " % the_game.player.location
+        styles.flower()
         print "Von hier kannst du folgende Orte besuchen: "
         
         #print "Die Map: %s" % self.game_map
@@ -51,10 +52,10 @@ class Menu(object):
 
         def poi_format(poi_list):
             for i in poi_list:
-                print i + '\n'
+                print """    %s""" % i
         
         poi_formatted = poi_format(poi_list)
-
+        styles.flower()
         action = raw_input("Bitte waehle eine Option: ")
         return poi_formatted, action #returns a tuple
 
@@ -99,7 +100,7 @@ class Engine(object):
             self.player = self.loadinstant(self.player)
         elif action is '1':
             self.player = self.loadgame()
-            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer." % self.player.name
+            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer.\n" % self.player.name
         elif action is '2':
             print 'Auf wiedersehen.'
             exit(1)
@@ -114,11 +115,10 @@ class Engine(object):
             #unpacking return values tuple
             poi_formatted, action = the_menu.locations_menu(the_navigation.next_scene(self.player.location), game_map)
 
-            action = action
-
             if action in the_navigation.gamemap.scenemapper:
                 #call player movement
-                the_game.player.move(action)
+                self.player.location = self.player.move(action)
+                the_navigation.gamemap.locations[self.player.location].enter()
             else:
                 print "Diese Eingabe habe ich nicht verstanden. Probiere es noch einmal."
 
@@ -147,7 +147,11 @@ class Engine(object):
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
-        self.player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Start: '), None, None)
+        try:
+            self.player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Start: '), None, None)
+        except ValueError:
+            print "Bitte gebe hier nur Zahlen und keine Buchstaben ein."
+        
         #help(new_player)
         print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (self.player.name, self.player.gender, int(self.player.age))
         print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(self.player.strength), int(self.player.hitpoints))

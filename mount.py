@@ -3,7 +3,7 @@ class Mount(object):
     * Ella
     * Fella
     * Gella
-    * Pink-Po
+    * Pink Po
     """
     def __init__(self, name):
         self.name = name
@@ -16,3 +16,8 @@ class Mount(object):
 
     def listern(self):
         pass
+
+ella = Mount('ella')
+fella = Mount('fella')
+gella = Mount('gella')
+pink_po = Mount('pink_po')

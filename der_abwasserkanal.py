@@ -16,4 +16,4 @@ class Weggabelung(object):
             print "Du bist an der Weggabelung im Abwasserkanal."
         else:
             print "Du warst schon eimal hier."
-abwasserkanal = Abwasserkanal()
+weggabelung = Weggabelung()

@@ -60,16 +60,16 @@ class Map(object):
 
     locations = {
         #Das Schwimmbad
-        'liegewiese' : Liegewiese(),
-        'gertudesbaum' : GertrudesBaum(),
-        'beckenrand' : Beckenrand(),
-        'sprungturm' : Sprungturm(),
-        'schwimmbecken' : Schwimmbecken(),
-        'imbiss' : Imbiss(),
-        'kassenhaus' : Kassenhaus(),
+        'liegewiese' : liegewiese,
+        'gertudesbaum' : gertudesbaum,
+        'beckenrand' : beckenrand,
+        'sprungturm' : sprungturm,
+        'schwimmbecken' : schwimmbecken,
+        'imbiss' : imbiss,
+        'kassenhaus' : kassenhaus,
 
         #Der Abwasserkanal
-        'weggabelung' : Weggabelung(),
+        'weggabelung' : weggabelung
     }
 
     def __init__(self, start_scene):
