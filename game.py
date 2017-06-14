@@ -39,10 +39,10 @@ class Menu(object):
     def locations_menu(self, location, game_map):
         self.location = location
         self.game_map = game_map
-        print "Du bst an diesem Ort: %s " % self.location
+        print "Du bist an diesem Ort: %s " % the_game.player.location
         print "Von hier kannst du folgende Orte besuchen: "
+        
         #print "Die Map: %s" % self.game_map
-    
 
         poi_list = []
         for k, v in self.game_map.scenemapper.iteritems():
@@ -54,7 +54,9 @@ class Menu(object):
                 print i + '\n'
         
         poi_formatted = poi_format(poi_list)
-        return poi_formatted
+
+        action = raw_input("Bitte waehle eine Option: ")
+        return poi_formatted, action #returns a tuple
 
 
 class Navigation(object):
@@ -70,7 +72,7 @@ class Navigation(object):
             available_locations.setdefault(v, []).append(k)
               
         for k, v in available_locations.iteritems():
-            if the_game.player[8] in v:
+            if the_game.player.location in v:
                 return k
         
         '''
@@ -97,15 +99,51 @@ class Engine(object):
             self.player = self.loadinstant(self.player)
         elif action is '1':
             self.player = self.loadgame()
-            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer." % self.player[1]
+            print "\nHier beginnt deine Reise, %s. ich oeffne jetzt das Tor zu deinem Abenteuer." % self.player.name
         elif action is '2':
             print 'Auf wiedersehen.'
             exit(1)
         else:
             print "Das habe ich nicht verstanden"
+        
+        while True:
+            # original way to access the_navigation.next_scene(self.player[8])
+            #print "Du bist im %s. Hier gibt es folgende Orte, an denen du dich umsehen koenntest." % the_navigation.next_scene(self.player[8])
 
-        #print "Du bist im %s. Hier gibt es folgende Orte, an denen du dich umsehen koenntest." % the_navigation.next_scene(self.player[8])
-        print the_menu.locations_menu(the_navigation.next_scene(self.player[8]), game_map)
+            #detour to access the same thing via the_menu
+            #unpacking return values tuple
+            poi_formatted, action = the_menu.locations_menu(the_navigation.next_scene(self.player.location), game_map)
+
+            action = action
+
+            if action in the_navigation.gamemap.scenemapper:
+                #call player movement
+                the_game.player.move(action)
+            else:
+                print "Diese Eingabe habe ich nicht verstanden. Probiere es noch einmal."
+
+            ''' implement all this:
+                #debug: print the_game.player.location            
+            elif action in agents_dict
+                #move to next location
+                pass
+            elif action in chests_dict
+                #move to next location
+                pass
+            elif action in doors_dict
+                #move to next location
+                pass
+            elif action in items_dict
+                #move to next location
+                pass
+            elif action in mounts_dict
+                #move to next location
+                pass
+            elif action in traps_dict
+                #move to next location
+                pass
+            else:
+                '''
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
@@ -118,7 +156,8 @@ class Engine(object):
     def savegame(self):
         """write current state entire game session to a file."""
         pickle_out = open ('savegame_' + str(self.player.name) + '.txt', 'w+')
-        self.player.player_dict = pickle.dump(self.player.player_dict, pickle_out)
+        pickle.dump(self.player, pickle_out)
+        #self.player = pickle.dump(self.player, pickle_out)
         pickle_out.close()
         print "\nSpieler >> %s << gespeichert.\n" % self.player.name
 
@@ -133,7 +172,7 @@ class Engine(object):
         pickle_in = open ('savegame_' + action + '.txt', 'r+')
         self.player = pickle.load(pickle_in)
         styles.flower()
-        print "In Ordnung, %s. Legen wir los." % self.player[1]
+        print "In Ordnung, %s. Legen wir los." % self.player.name
         print '''
         Hier siehst du Details ueber deinen Helden:
         
@@ -145,7 +184,7 @@ class Engine(object):
         Reittier:       %s
 
         Aktueller Ort:  %s
-        ''' % (self.player[1], self.player[2], int(self.player[3]), int(self.player[4]), int(self.player[5]), self.player[7], self.player[8])
+        ''' % (self.player.name, self.player.gender, int(self.player.age), int(self.player.strength), int(self.player.hitpoints), self.player.mount, self.player.location)
         
         return self.player
 
@@ -155,7 +194,7 @@ class Engine(object):
         pickle_in = open ('savegame_' + player + '.txt', 'r+')
         restored_player = pickle.load(pickle_in)
         styles.flower()
-        print "In Ordnung, %s. Legen wir los." % restored_player[1]
+        print "In Ordnung, %s. Legen wir los." % restored_player.name
         print '''
         Hier siehst du Details ueber deinen Helden:
         
@@ -167,7 +206,7 @@ class Engine(object):
         Reittier:       %s
 
         Aktueller Ort:  %s
-        ''' % (restored_player[1], restored_player[2], int(restored_player[3]), int(restored_player[4]), int(restored_player[5]), restored_player[7],restored_player[8])
+        ''' % (self.player.name, self.player.gender, int(self.player.age), int(self.player.strength), int(self.player.hitpoints), self.player.mount, self.player.location)
 
         return restored_player
 
