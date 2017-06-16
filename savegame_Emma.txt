@@ -12,18 +12,18 @@ Rp4
 (dp5
 S'strength'
 p6
-F63.15302442586499
+F10.969633971484454
 sS'name'
 p7
-S'Martin Maurer'
+S'Emma'
 p8
 sS'gender'
 p9
-S'm\x84nnlich'
+S'weiblich'
 p10
 sS'age'
 p11
-F37.0
+F6.0
 sS'location'
 p12
 S'start'
@@ -32,7 +32,7 @@ sS'items'
 p14
 NsS'hitpoints'
 p15
-F50.769681636027016
+F11.057680584544395
 sS'mount'
 p16
 Nsb.

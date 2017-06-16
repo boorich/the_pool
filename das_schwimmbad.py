@@ -26,59 +26,71 @@ liegewiese = Liegewiese()
 
 class GertrudesBaum(object):
     loc_index = 1
+    first_visit = True
     loc_name = 'Gertrude\'s Baum'
 
     def enter(self):
-        if first_visit:
+        if self.first_visit:
             print "Du bist an Gertrudes Baum."
+            self.first_visit = False
         else:
             print "Du warst schon eimal hier."
-gertudesbaum = GertrudesBaum()
+gertrudesbaum = GertrudesBaum()
 
 class Beckenrand(object):
     loc_index = 2
+    first_visit = True
     loc_name = 'Beckenrand'
     def enter(self):
-        if first_visit:
+        if self.first_visit:
             print "Du bist Beckenrand."
+            self.first_visit = False
         else:
             print "Du warst schon eimal hier."
 beckenrand = Beckenrand()
 
 class Sprungturm(object):
     loc_index = 3
+    first_visit = True
     loc_name = 'Sprungturm'
     def enter(self):
-        if first_visit:
+        if self.first_visit:
             print "Du bist am Sprungturm."
+            self.first_visit = False
         else:
             print "Du warst schon eimal hier."
 sprungturm = Sprungturm()
 
 class Schwimmbecken(object):
     loc_index = 4
+    first_visit = True
     loc_name = 'Schwimmbecken'
     def enter(self):
-        if first_visit:
+        if self.first_visit:
             print "Du bist im Schwimmbecken."
+            self.first_visit = False
         else:
             print "Du warst schon eimal hier."
 schwimmbecken = Schwimmbecken()
 
 class Imbiss(object):
     loc_index = 5
+    first_visit = True
     def enter(self):
-        if first_visit:
+        if self.first_visit:
             print "Du bist am Imbiss."
+            self.first_visit = False
         else:
             print "Du warst schon eimal hier."
 imbiss = Imbiss()
 
 class Kassenhaus(object):
     loc_index = 6
+    first_visit = True
     def enter(self):
-        if first_visit:
+        if self.first_visit:
             print "Du bist am Kassenhaus."
+            self.first_visit = False
         else:
             print "Du warst schon eimal hier."
 kassenhaus = Kassenhaus()

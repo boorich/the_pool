@@ -46,7 +46,7 @@ class Map(object):
         #Das Schwimmbad
         'start' : 'schwimmbad',
         'liegewiese' : 'schwimmbad',
-        'gertudesbaum' : 'schwimmbad',
+        'gertrudesbaum' : 'schwimmbad',
         'beckenrand' : 'schwimmbad',
         'sprungturm' : 'schwimmbad',
         'schwimmbecken' : 'schwimmbad',
@@ -61,7 +61,7 @@ class Map(object):
     locations = {
         #Das Schwimmbad
         'liegewiese' : liegewiese,
-        'gertudesbaum' : gertudesbaum,
+        'gertrudesbaum' : gertrudesbaum,
         'beckenrand' : beckenrand,
         'sprungturm' : sprungturm,
         'schwimmbecken' : schwimmbecken,

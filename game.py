@@ -39,7 +39,7 @@ class Menu(object):
     def locations_menu(self, location, game_map):
         self.location = location
         self.game_map = game_map
-        print "Du bist an diesem Ort: %s " % the_game.player.location
+        #print "Du bist an diesem Ort: %s " % the_game.player.location
         styles.flower()
         print "Von hier kannst du folgende Orte besuchen: "
         
@@ -147,15 +147,14 @@ class Engine(object):
 
     def create_player(self):
         """define a new player name, gender and generate hitpoints randomly"""
-        try:
-            self.player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Start: '), None, None)
-        except ValueError:
-            print "Bitte gebe hier nur Zahlen und keine Buchstaben ein."
-        
-        #help(new_player)
-        print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (self.player.name, self.player.gender, int(self.player.age))
-        print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(self.player.strength), int(self.player.hitpoints))
-        return self.player
+        while True:
+            try:
+                self.player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Start: '), None, None)
+                print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (self.player.name, self.player.gender, int(self.player.age))
+                print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(self.player.strength), int(self.player.hitpoints))
+                return self.player
+            except ValueError:
+                print "Bitte gebe hier nur Zahlen und keine Buchstaben ein."
 
     def savegame(self):
         """write current state entire game session to a file."""
@@ -167,30 +166,39 @@ class Engine(object):
 
     def loadgame(self):
         """Restore a game session based on a raw input of player name string."""
-        savegames = glob("savegame*") #creates a list of available savegames on disk
-        print "Du moechtest ein Spiel laden? In Ordnung, bitte waehle deinen Spieler:\n"
-        for entries in savegames:
-            #to do: format the strings to only display the name of the player
-            print "        %s\n" % entries.rstrip('.txt').lstrip('savegame_')
-        action = raw_input('>> ')
-        pickle_in = open ('savegame_' + action + '.txt', 'r+')
-        self.player = pickle.load(pickle_in)
-        styles.flower()
-        print "In Ordnung, %s. Legen wir los." % self.player.name
-        print '''
-        Hier siehst du Details ueber deinen Helden:
-        
-        Name:           %s
-        Geschlecht:     %s
-        Alter:          %s Jahre
-        Angriff:        %s
-        Lebenspunkte:   %s
-        Reittier:       %s
+        while True:
+            savegames = glob("savegame*") #creates a list of available savegames on disk
+            print "Du moechtest ein Spiel laden? In Ordnung, bitte waehle deinen Spieler:\n"
+            shortname_list = []
+            for entries in savegames:
+                #to do: format the strings to only display the name of the player
+                shortname = "%s" % entries.rstrip('.txt').lstrip('savegame_')
+                print shortname
+                shortname_list.append(shortname)
+            action = raw_input('>> ')
+            if action in shortname_list:
+                print 'savegame_' + action + '.txt'
+                pickle_in = open ('savegame_' + action + '.txt', 'r+')
+                self.player = pickle.load(pickle_in)
+                styles.flower()
+                print "In Ordnung, %s. Legen wir los." % self.player.name
+                print '''
+                Hier siehst du Details ueber deinen Helden:
+                
+                Name:           %s
+                Geschlecht:     %s
+                Alter:          %s Jahre
+                Angriff:        %s
+                Lebenspunkte:   %s
+                Reittier:       %s
 
-        Aktueller Ort:  %s
-        ''' % (self.player.name, self.player.gender, int(self.player.age), int(self.player.strength), int(self.player.hitpoints), self.player.mount, self.player.location)
-        
-        return self.player
+                Aktueller Ort:  %s
+                ''' % (self.player.name, self.player.gender, int(self.player.age), int(self.player.strength), int(self.player.hitpoints), self.player.mount, self.player.location)
+                
+                return self.player
+            else:
+                print "Bitte gib den Namen des Spielers richtig ein."  
+
 
     def loadinstant(self, player):
         """Restore a game session based on a passed player name string."""

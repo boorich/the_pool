@@ -12,14 +12,14 @@ Rp4
 (dp5
 S'strength'
 p6
-F63.35935503858538
+F77.30358849382824
 sS'name'
 p7
 S'Jelena'
 p8
 sS'gender'
 p9
-S'weiblihc'
+S'weiblich'
 p10
 sS'age'
 p11
@@ -32,7 +32,7 @@ sS'items'
 p14
 NsS'hitpoints'
 p15
-F64.30057720303623
+F72.58906844172779
 sS'mount'
 p16
 Nsb.
