@@ -20,12 +20,9 @@ class Menu(object):
     def __init__(self, styles):
         self.styles = styles
 
-    def menu_handler(self):
-        """Take in return strings and display context menus accordingly."""
-        action = return_string
-        return action
 
     def main_menu(self):
+        '''Show the start menu to add and load players.'''
         print """
         Neues Spiel   (0)
         Spiel laden   (1)
@@ -37,6 +34,7 @@ class Menu(object):
         return action
 
     def locations_menu(self, location, game_map):
+        '''Show the players position and available locations to go to next.'''
         self.location = location
         self.game_map = game_map
         #print "Du bist an diesem Ort: %s " % the_game.player.location
@@ -58,6 +56,13 @@ class Menu(object):
         styles.flower()
         action = raw_input("Bitte waehle eine Option: ")
         return poi_formatted, action #returns a tuple
+
+    def agents_menu(self, agent):
+        '''Show the name and stats of agents at the current location. Update the stats in fights and allow to check on agents by typing [agent_name] + [untersuchen]'''
+        self.agent = agent
+        print "An diesem Ort befindet sich folgender weitere Spieler: %s" % self.agent.name
+        action = raw_input('Wenn du mehr ueber diesen Spieler erfahren moechtest, dann tippe seinen Namen ein: \n >>')
+
 
 
 class Navigation(object):
@@ -116,9 +121,10 @@ class Engine(object):
             poi_formatted, action = the_menu.locations_menu(the_navigation.next_scene(self.player.location), game_map)
 
             if action in the_navigation.gamemap.scenemapper:
-                #call player movement
+                '''call player movement if a valid location next location has been picked'''
                 self.player.location = self.player.move(action)
                 the_navigation.gamemap.locations[self.player.location].enter()
+
             else:
                 print "Diese Eingabe habe ich nicht verstanden. Probiere es noch einmal."
 

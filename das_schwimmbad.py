@@ -2,6 +2,7 @@ from doors import *
 from agent import *
 from mount import *
 
+
 doors = {
 
 'to_kanal' : uwgitter
@@ -12,17 +13,29 @@ class Liegewiese(object):
     loc_index = 0
     first_visit = True
 
+    def __init__(self, agent, chest, doors, mount, trap):
+        self.agent = agent
+        self.chest = chest
+        self.doors = doors
+        self.mount = mount
+        self.trap = trap
+
     def enter(self):
         if self.first_visit:
             print "Du befindest die auf der Liegewiese des Schwimmbads. Neben dir ist deine Freundin %s" % alia.name
             print "Die Sonne scheint hell und es ist sehr warm. Euer Liebeplatz befindet sich in der Naehe des Zauns."
             print "Auf der andere Seite des Zauns siehst du einen Reitplatz. Ein Maedchen kommt gerade auf den Platz."
             print "Sie hat ein wunderschoenes Pferd an den Zuegeln, welches gutmuetig hinter Ihr her trottet."
-            print "Als du genauer hin siehst faellt dir auf, dass es sich um deine Freundin %s mit Ihrem Pferd %s handelt" % (lisa.name, pink_po.name)
-            self.first_visit = False
+            print "Als du genauer hin siehst faellt dir auf, dass es sich um %s mit Ihrem Pferd %s handelt" % (lisa.name, pink_po.name)
+            print "Ploetzlich kommt die ein Gedanke. Du springst auf und %s schaut dich fragend an:" % alia.name
+            print "\"Lass uns reiten gehen\" rufst du %s vergnuegt entgegen und rennst los." % alia.name
+
+
+
         else:
             print "Du warst schon eimal hier."
-liegewiese = Liegewiese()
+            
+liegewiese = Liegewiese(alia, None, None, None, None)
 
 class GertrudesBaum(object):
     loc_index = 1
