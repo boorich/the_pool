@@ -57,11 +57,20 @@ class Menu(object):
         action = raw_input("Bitte waehle eine Option: ")
         return poi_formatted, action #returns a tuple
 
-    def agents_menu(self, agent):
+    def agents_menu(self, agent, location):
         '''Show the name and stats of agents at the current location. Update the stats in fights and allow to check on agents by typing [agent_name] + [untersuchen]'''
         self.agent = agent
-        print "An diesem Ort befindet sich folgender weitere Spieler: %s" % self.agent.name
-        action = raw_input('Wenn du mehr ueber diesen Spieler erfahren moechtest, dann tippe seinen Namen ein: \n >>')
+        self.location = location
+        action = raw_input("\nAn diesem Ort ist ein NPC. Wenn du mehr ueber Ihn erfahren willst, dann tippe bitte \"inspizieren\".\n")
+        if "inspizieren" in action:
+            for k, v in self.agent.iteritems():
+                if self.location in k:
+                    print "Name des NPC: %s" % v.name
+                    print "Hintergundinfo: %s" % v.detail
+                    print "Weitere Befehle: \"ansprechen\", \"angreifen\", \"geben[Objekt]\", \"zurueck\"" 
+
+        else:
+            print "Hier ist niemand ausser dir, %s." % self.player.name
 
 
 
@@ -124,6 +133,7 @@ class Engine(object):
                 '''call player movement if a valid location next location has been picked'''
                 self.player.location = self.player.move(action)
                 the_navigation.gamemap.locations[self.player.location].enter()
+                the_menu.agents_menu(agents_dict, self.player.location)
 
             else:
                 print "Diese Eingabe habe ich nicht verstanden. Probiere es noch einmal."
