@@ -12,10 +12,10 @@ Rp4
 (dp5
 S'strength'
 p6
-F9.42573006331892
+F84.68747564172718
 sS'name'
 p7
-S'Emma'
+S'Birgit'
 p8
 sS'agent_to_talk'
 p9
@@ -25,7 +25,7 @@ S'weiblich'
 p11
 sS'age'
 p12
-F6.0
+F63.0
 sS'location'
 p13
 S'start'
@@ -34,7 +34,7 @@ sS'items'
 p15
 NsS'hitpoints'
 p16
-F11.470199644946733
+F89.10259006875798
 sS'mount'
 p17
 Nsb.

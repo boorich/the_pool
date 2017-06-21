@@ -12,11 +12,18 @@ class Agent(object):
 
     def move(self):
         '''move player around randomly within the level'''
-        pass
+        #self.location = random.location
 
-    def talk(self):
-        '''give answer based on input string'''
-        pass
+    def diag (self, greeting):
+        '''give answers based on input strings'''
+        self.greeting = greeting
+
+        if 'Hallo' in self.greeting:
+            print '%s.' % self.agents_diag[0]
+        elif 'Tschuess' in self.greeting:
+            print self.greeting
+        else:
+            pass
 
     def give_item(self):
         '''return an item object to the player'''
@@ -56,7 +63,7 @@ kraehen = Agent('Die 3 Kraehen', 50, 1, 'kraehenbusch', None, '3 freche Kraehen,
 
 agents_dict = {
 
-    'liegerwiese' : alia,
+    'liegewiese' : alia,
     'gertrudesbaum' : gertrude,
     'sprungturm' : dicker_junge,
     'kassenhaus' : james,
@@ -67,4 +74,19 @@ agents_dict = {
     'zumbergpfad' : bergtroll,
     'fledermausgrotte' : fledermaeuse,
     'kraehenbusch' : kraehen
+}
+
+agents_diag = {
+
+    alia : ['Ich helfe dir, wann immer du meinen Namen sagst.', 'D2', 'D3'],
+    gertrude : ['Ich will eine funkelnde Haarspange.', 'D2', 'D3'],
+    dicker_junge : ['Ich traue mich nicht vom Sprungturm zu springen', 'D2', 'D3'],
+    james : ['Ich moechte einen Cheeseburger.', 'D2', 'D3'],
+    keines_maedchen : ['Ich weiss das meine Haarspange in das Schwimmbecken gefallen ist.', 'D2', 'D3'],
+    gerald : ['Loese ein Raetsel, damit ich dich zu Samira lasse.', 'D2', 'D3'],
+    samira : ['Ich moechte den Schmuck aus der Truhe.', 'D2', 'D3'],
+    lisa : ['Ich reite nur mit Freundinnen aus die besondere Pferde haben.', 'D2', 'D3'],
+    bergtroll : ['Ich lasse dich nicht durch und ich habe Hunger auf Kaese.', 'D2', 'D3'],
+    fledermaeuse : ['Wir stehlen deine Sachen und wir lassen dich nicht durch.', 'D2', 'D3'],
+    kraehen : ['Wir wollen mit dir kaempfen und lassen dich nicht durch.', 'D2', 'D3'],
 }

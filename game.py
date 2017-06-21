@@ -67,7 +67,8 @@ class Menu(object):
                 if self.location in k:
                     print "Name des NPC: %s" % v.name
                     print "Hintergundinfo: %s" % v.detail
-                    print "Weitere Befehle: \"ansprechen\", \"angreifen\", \"geben[Objekt]\", \"zurueck\"" 
+                    print "Weitere Befehle: \"ansprechen\", \"angreifen\", \"geben[Objekt]\", \"zurueck\""
+                    return raw_input("\n >> ")
 
         else:
             print "Hier ist niemand ausser dir, %s." % self.player.name
@@ -132,11 +133,38 @@ class Engine(object):
             if action in the_navigation.gamemap.scenemapper:
                 '''call player movement if a valid location next location has been picked'''
                 self.player.location = self.player.move(action)
-                the_navigation.gamemap.locations[self.player.location].enter()
-                the_menu.agents_menu(agents_dict, self.player.location)
+                try:
+                    self.player.agent_to_talk = agents_dict[self.player.location]
+                    action = the_menu.agents_menu(agents_dict, self.player.location)
+                    the_navigation.gamemap.locations[self.player.location].enter()
+                    # \"ansprechen\", \"angreifen\", \"geben[Objekt]\", \"zurueck\
+                    if 'ansprechen' in action:
+                        #print self.player.agent_to_talk
+                        self.player.talk_to(self.player.agent_to_talk)
+                    else:
+                        print "Inner loop!"            
+                except KeyError:
+                    print "An diesem Ort gibt es keinen NPC."
+            else:
+                print "Else 1st loop !!!"
+
+            
+            # \"ansprechen\", \"angreifen\", \"geben[Objekt]\", \"zurueck\
+            if 'ansprechen' in action:
+                #print self.player.agent_to_talk
+                self.player.talk_to(self.player.agent_to_talk)
+            
+            elif 'angreifen' in action:
+                pass
+            
+            elif 'geben' in action:
+                pass
+
+            elif 'zurueck' in action:
+                pass
 
             else:
-                print "Diese Eingabe habe ich nicht verstanden. Probiere es noch einmal."
+                print "Else 2nd loop !!!"
 
             ''' implement all this:
                 #debug: print the_game.player.location            
@@ -165,9 +193,9 @@ class Engine(object):
         """define a new player name, gender and generate hitpoints randomly"""
         while True:
             try:
-                self.player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Start: '), None, None)
-                print '\nDein Name lautet %s, du bist %s und %s jahre alt.' % (self.player.name, self.player.gender, int(self.player.age))
-                print 'Daraus ergibt sich eine Angriffswert von %s und du erhaelts %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(self.player.strength), int(self.player.hitpoints))
+                self.player = Player(raw_input('Dein Name: '), raw_input('Dein Geschlecht: '), float(raw_input('Dein Alter: ')), raw_input('Dein Start: '), None, None, None)
+                print '\nDein Name lautet %s, du bist %s und %s Jahre alt.' % (self.player.name, self.player.gender, int(self.player.age))
+                print 'Daraus ergibt sich eine Angriffswert von %s und du erhaeltst %s Lebenspunkte zu Beginn dieses Spiels.\n' % (int(self.player.strength), int(self.player.hitpoints))
                 return self.player
             except ValueError:
                 print "Bitte gebe hier nur Zahlen und keine Buchstaben ein."
@@ -247,7 +275,7 @@ styles = Styles(None)
 the_menu = Menu(styles)
 the_menu.styles.flower
 
-the_player = Player(1, 2, 3, 4, 5, 6)
+the_player = Player(1, 2, 3, 4, 5, 6, 7)
 the_navigation = Navigation(game_map)
 the_game = Engine(the_navigation, the_player, the_menu)
 

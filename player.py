@@ -2,7 +2,7 @@ import random
 
 class Player(object):
     """Keeps relevant data of player and handles behavior."""
-    def __init__(self, name, gender, age, location, items, mount):
+    def __init__(self, name, gender, age, location, items, mount, agent_to_talk):
         self.name = name
         self.gender = gender
         self.age = age
@@ -10,6 +10,7 @@ class Player(object):
         self.hitpoints = age * float(random.uniform(1,2))
         self.items = items
         self.mount = mount
+        self.agent_to_talk = agent_to_talk
         self.location = location
 
         '''
@@ -35,20 +36,32 @@ class Player(object):
 
         return self.location
 
-    def talk(self):
+    def talk_to(self, agent):
+        self.agent = agent
+        print ("\nMoechtest du ein Gespraech mit %s beginnen? (Ja / Nein)") % self.agent.name
+        action = raw_input(">> ")
+        if 'Ja' in action:
+            self.agent.diag('Hallo')
+        elif 'Nein' in action:
+            self.agent.diag('Tschuess')
+        else:
+            print "Das habe ich nicht verstanden. Bitte antworte nur mit \"Ja\" oder \"Nein\"."
+
+    def give_item_to(self, agent):
+        self.agent = agent
         pass
 
-    def give_item(self):
+    def take_item_from(self, agent):
+        self.agent = agent
         pass
 
-    def take_item(self):
-        pass
-
-    def attack(self):
+    def attack(self, agent):
+        self.agent = agent
         pass
 
     def defend(self):
         pass
 
-    def mount_horse(self):
+    def mount_(self, mount):
+        self.mount = mount
         pass
